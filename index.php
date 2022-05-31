@@ -24,21 +24,48 @@ $klein = new \Klein\Klein();
 // plus tard quand la fonction de callback sera executée. 
 // Elle sera executée quand on tapera dans l'URL  le chemin jusqu'a la racine .
 $klein->respond('GET', '/', function () use ($frontController) {
-    $frontController->index();
+    // $frontController->index();
 });
 
-$klein->respond('GET', '/listeActeurs', function () use ($backController) {
-
-    $backController->liste();
+$klein->respond('GET', '/listActors', function () use ($frontController) {
+    $res = $frontController->listActors();
+    echo "<h2> Liste des acteurs </h2>";
+    require("src/views/viewListActors.php");
 });
 
-$klein->respond('GET', '/acteur/[:id]', function ($request) use ($backController) {
-    $id = $request->id;
-    $backController->getActor($id);
+$klein->respond('GET', '/actor/[:id]', function ($request) use ($frontController) {
+    $actor = $frontController->getActor($request->id);
+    echo "<h2> Acteur </h2>";
+    require("src/views/viewActor.php");
 });
 
-$klein->respond('GET', '/hello', function () {
-    return 'hello World';
+$klein->respond('GET', '/actor/[:id]/films', function ($request) use ($frontController) {
+    $movies = $frontController->getMoviesforActor($request->id);
+    echo "<h2> Films de l'acteur </h2>";
+    require("src/views/viewActorMovies.php");
 });
+
+$klein->respond('GET', '/addActor', function () {
+    require("src/views/viewAddActor.php");
+});
+
+$klein->respond('POST', '/addActor', function ($request) use ($backController) {
+    $backController->addActor($request->paramsPost());
+    echo "<h2> Acteur ajouté </h2>";
+});
+
+$klein->respond('POST', '/updateActor', function ($request) use ($backController) {
+    $backController->updateActor($request->paramsPost());
+    echo "<h2> Acteur modifié </h2>";
+});
+
+$klein->respond('GET', '/updateActor/[:id]', function ($request) use ($frontController) {
+    $actor = $frontController->getActor($request->id);
+    require("src/views/viewUpdateActor.php");
+});
+
+// $klein->respond('GET', '/hello', function () {
+//     return 'hello World';
+// });
 
 $klein->dispatch();

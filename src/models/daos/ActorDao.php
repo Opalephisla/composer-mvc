@@ -10,11 +10,11 @@ class ActorDao extends ConnectDao
 
     public function creeObj($fields)
     {
-        $acteur = new Actor();
-        $acteur->setId($fields['id']);
-        $acteur->setFirstName($fields['first_name']);
-        $acteur->setLastName($fields['last_name']);
-        return $acteur;
+        $actor = new Actor();
+        $actor->setId($fields['id']);
+        $actor->setFirstName($fields['first_name']);
+        $actor->setLastName($fields['last_name']);
+        return $actor;
     }
 
     public function findAll()
@@ -40,6 +40,39 @@ class ActorDao extends ConnectDao
         if ($result) {
             $row =  $stmt->fetch(\PDO::FETCH_ASSOC);
             return $this->creeObj($row);
+        }
+    }
+
+    public function findMoviesforActor($id)
+    {
+        $sql = "SELECT * FROM movie WHERE id IN (SELECT movie_id FROM movies_actors WHERE actor_id = :id)";
+        $stmt = $this->db->prepare($sql);
+        $result = $stmt->execute(['id' => $id]);
+        if ($result) {
+            $movies = [];
+            while ($row =  $stmt->fetch(\PDO::FETCH_ASSOC)) {
+                array_push($movies, $this->creeObj($row));
+            }
+            return $movies;
+        }
+    }
+
+    public function createActor($actor)
+    {
+        $sql = "INSERT INTO actor (first_name, last_name) VALUES (:first_name, :last_name)";
+        $stmt = $this->db->prepare($sql);
+        $result = $stmt->execute(['first_name' => $actor['first_name'], 'last_name' => $actor['last_name']]);
+        if ($result) {
+            return $this->db->lastInsertId();
+        }
+    }
+    public function updateActor($actor)
+    {
+        $sql = "UPDATE actor SET first_name = :first_name, last_name = :last_name WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $result = $stmt->execute(['first_name' => $actor['first_name'], 'last_name' => $actor['last_name'], 'id' => $actor['id']]);
+        if ($result) {
+            return $this->db->lastInsertId();
         }
     }
 }

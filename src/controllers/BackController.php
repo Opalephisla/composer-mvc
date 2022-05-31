@@ -3,31 +3,28 @@
 namespace mvcobjet\controllers;
 
 use mvcobjet\models\daos\ActorDao;
+use mvcobjet\models\services\ActorService;
 
 class BackController
 {
-
-    public function index()
+    private $actorService;
+    public function __construct()
     {
-        echo "<h1>Hello mvcobjet du BackController</h1>";
+        $this->actorService = new ActorService();
     }
-    public function liste()
+    public function addActor($request)
     {
-        $actors = new ActorDao();
-        $result = $actors->findAll();
-        echo "<h1>Liste des acteurs</h1>";
-        echo "<ul>";
-        foreach ($result as $actor) {
-            echo "<li>" . $actor->getFirstName() . " " . $actor->getLastName() . "</li>";
-        }
-        echo "</ul>";
+        $res = $this->actorService->addActor($request);
+        return $res;
     }
-    function getActor($id)
+    public function updateActor($request)
     {
-        $actors = (new ActorDao())->findById($id);
-        echo "<h1>Acteurs</h1>";
-        echo "<ul>";
-        echo "<li>" . $actors->getFirstName() . " " . $actors->getLastName() . "</li>";
-        echo "</ul>";
+        $res = $this->actorService->updateActor($request);
+        return $res;
+    }
+    public function findbyId($id)
+    {
+        $res = $this->actorService->getOneActor($id);
+        return $res;
     }
 }

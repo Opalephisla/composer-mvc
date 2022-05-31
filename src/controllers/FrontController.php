@@ -2,11 +2,28 @@
 
 namespace mvcobjet\controllers;
 
+use mvcobjet\models\services\ActorService;
+
 class FrontController
 {
-
-    public function index()
+    private $actorService;
+    public function __construct()
     {
-        echo "<h1>Hello mvcobjet du frontController</h1>";
+        $this->actorService = new ActorService();
+    }
+    public function listActors()
+    {
+        $res = $this->actorService->getAllActors();
+        return $res;
+    }
+    public function getActor($id)
+    {
+        $res = $this->actorService->getOneActor($id);
+        return $res;
+    }
+    public function getMoviesforActor($id)
+    {
+        $res = $this->actorService->getActorMovies($id);
+        return $res;
     }
 }
