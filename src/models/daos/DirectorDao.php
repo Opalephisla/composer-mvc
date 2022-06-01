@@ -2,39 +2,39 @@
 
 namespace mvcobjet\models\daos;
 
-use mvcobjet\models\entities\Actor;
+use mvcobjet\models\entities\Director;
 use mvcobjet\models\daos\ConnectDao;
 
-class ActorDao extends ConnectDao
+class DirectorDao extends ConnectDao
 {
 
     public function creeObj($fields)
     {
-        $actor = new Actor();
-        $actor->setId($fields['id']);
-        $actor->setFirstName($fields['first_name']);
-        $actor->setLastName($fields['last_name']);
-        return $actor;
+        $director = new Director();
+        $director->setId($fields['id']);
+        $director->setFirstName($fields['first_name']);
+        $director->setLastName($fields['last_name']);
+        return $director;
     }
 
     public function findAll()
     {
-        $sql = "SELECT * FROM actor";
+        $sql = "SELECT * FROM director";
         $stmt = $this->db->prepare($sql);
         $result = $stmt->execute();
         if ($result) {
-            $actors = [];
+            $directors = [];
             while ($row =  $stmt->fetch(\PDO::FETCH_ASSOC)) {
-                //    $actors[] =  $this->creeObj($row) ;  
-                array_push($actors, $this->creeObj($row));
+                //    $directors[] =  $this->creeObj($row) ;  
+                array_push($directors, $this->creeObj($row));
             }
-            return $actors;
+            return $directors;
         }
     }
 
     public function findById($id)
     {
-        $sql = "SELECT * FROM actor WHERE id = :id";
+        $sql = "SELECT * FROM director WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         $result = $stmt->execute(['id' => $id]);
         if ($result) {
@@ -43,9 +43,9 @@ class ActorDao extends ConnectDao
         }
     }
 
-    public function findMoviesforActor($id)
+    public function findMoviesforDirector($id)
     {
-        $sql = "SELECT * FROM movie WHERE id IN (SELECT movie_id FROM movies_actors WHERE actor_id = :id)";
+        $sql = "SELECT * FROM movie WHERE id IN (SELECT movie_id FROM movies_directors WHERE director_id = :id)";
         $stmt = $this->db->prepare($sql);
         $result = $stmt->execute(['id' => $id]);
         if ($result) {
@@ -56,28 +56,28 @@ class ActorDao extends ConnectDao
             return $movies;
         }
     }
-    public function createActor($actor)
-    {
-        $sql = "INSERT INTO actor (first_name, last_name) VALUES (:first_name, :last_name)";
-        $stmt = $this->db->prepare($sql);
-        $result = $stmt->execute(['first_name' => $actor['first_name'], 'last_name' => $actor['last_name']]);
-        if ($result) {
-            return $this->db->lastInsertId();
-        }
-    }
-    public function updateActor($actor)
-    {
-        $sql = "UPDATE actor SET first_name = :first_name, last_name = :last_name WHERE id = :id";
-        $stmt = $this->db->prepare($sql);
-        $result = $stmt->execute(['first_name' => $actor['first_name'], 'last_name' => $actor['last_name'], 'id' => $actor['id']]);
-        if ($result) {
-            return $this->db->lastInsertId();
-        }
-    }
 
-    public function deleteActor($id)
+    public function createDirector($director)
     {
-        $sql = "DELETE FROM actor WHERE id = :id";
+        $sql = "INSERT INTO director (first_name, last_name) VALUES (:first_name, :last_name)";
+        $stmt = $this->db->prepare($sql);
+        $result = $stmt->execute(['first_name' => $director['first_name'], 'last_name' => $director['last_name']]);
+        if ($result) {
+            return $this->db->lastInsertId();
+        }
+    }
+    public function updateDirector($director)
+    {
+        $sql = "UPDATE director SET first_name = :first_name, last_name = :last_name WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $result = $stmt->execute(['first_name' => $director['first_name'], 'last_name' => $director['last_name'], 'id' => $director['id']]);
+        if ($result) {
+            return $this->db->lastInsertId();
+        }
+    }
+    public function deleteDirector($id)
+    {
+        $sql = "DELETE FROM director WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         $result = $stmt->execute(['id' => $id]);
         if ($result) {

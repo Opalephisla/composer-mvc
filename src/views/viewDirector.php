@@ -10,10 +10,7 @@
 
 <body>
     <?php
-    print_r($movies);
-    foreach ($movies as $movie) {
-        echo $movie->getTitle() . '<br>';
-    }
+    echo $director->getFirstName() . ' ' . $director->getLastName();
     ?>
 </body>
 
