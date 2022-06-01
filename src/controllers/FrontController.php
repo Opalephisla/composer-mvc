@@ -7,14 +7,19 @@ use mvcobjet\models\services\ActorService;
 class FrontController
 {
     private $actorService;
-    public function __construct()
+    private $twig;
+
+    public function __construct($t)
     {
         $this->actorService = new ActorService();
+        $this->twig = $t;
     }
+
     public function listActors()
-    {
-        $res = $this->actorService->getAllActors();
-        return $res;
+    { // recup des acteurs (liste d'objet)
+        $result = $this->actorService->getAllActors();
+        // compilation twig + acteur = html
+        echo $this->twig->render('actors.html.twig', ['actors' => $result]);
     }
     public function getActor($id)
     {

@@ -8,8 +8,13 @@ use mvcobjet\controllers\BackController;
 // rappel autoload 
 // ainsi je peux créer une instance de mon controller front 
 
+use Twig\Environment;
 
-$frontController = new FrontController();
+$loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/src/views');
+$twig = new Environment($loader, ['cache' => false, 'debug' => true]);
+$twig->addExtension(new \Twig\Extension\DebugExtension());
+
+$frontController = new FrontController($twig);
 $backController = new BackController();
 
 $base  = dirname($_SERVER['PHP_SELF']);
@@ -28,9 +33,7 @@ $klein->respond('GET', '/', function () use ($frontController) {
 });
 
 $klein->respond('GET', '/listActors', function () use ($frontController) {
-    $res = $frontController->listActors();
-    echo "<h2> Liste des acteurs </h2>";
-    require("src/views/viewListActors.php");
+    $frontController->listActors();
 });
 
 $klein->respond('GET', '/actor/[:id]', function ($request) use ($frontController) {
