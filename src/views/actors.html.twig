@@ -1,0 +1,9 @@
+{% block title %}Acteurs
+{% endblock %}
+
+{% block body %}
+	{% for actor in actors %}
+		{{ actor.firstname }}
+		{{ actor.lastname }}
+	{% endfor %}
+{% endblock %}

@@ -8,18 +8,23 @@ use mvcobjet\models\services\MovieService;
 
 class FrontController
 {
-    private $actorService;
     private $directorService;
-    public function __construct()
+    private $actorService;
+    private $twig;
+
+    public function __construct($t)
     {
+        $this->twig = $t;
         $this->actorService = new ActorService();
         $this->directorService = new DirectorService();
         $this->movieService = new MovieService();
     }
+
     public function listActors()
-    {
-        $res = $this->actorService->getAllActors();
-        return $res;
+    { // recup des acteurs (liste d'objet)
+        $result = $this->actorService->getAllActors();
+        // compilation twig + acteur = html
+        echo $this->twig->render('actors.html.twig', ['actors' => $result]);
     }
     public function getActor($id)
     {
