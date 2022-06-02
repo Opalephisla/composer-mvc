@@ -1,9 +1,12 @@
+{% extends "base.html.twig" %}
+
 {% block title %}Acteurs
 {% endblock %}
 
-{% block body %}
+{% block content %}
 	{% for actor in actors %}
-		{{ actor.firstname }}
-		{{ actor.lastname }}
+		<a href="./actor/{{ actor.id }}">{{ actor.lastname | upper}}</a>
+		{{ actor.firstname | upper}}
+		<br>
 	{% endfor %}
 {% endblock %}

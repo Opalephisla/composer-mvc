@@ -29,7 +29,7 @@ class FrontController
     public function getActor($id)
     {
         $res = $this->actorService->getOneActor($id);
-        return $res;
+        echo $this->twig->render('actor.html.twig', ['actor' => $res]);
     }
     public function getMoviesforActor($id)
     {

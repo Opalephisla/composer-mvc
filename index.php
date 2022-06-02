@@ -4,10 +4,6 @@ require_once "vendor/autoload.php";
 use mvcobjet\controllers\FrontController;
 use mvcobjet\controllers\BackController;
 
-
-// rappel autoload 
-// ainsi je peux créer une instance de mon controller front 
-
 use Twig\Environment;
 
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/src/views');
@@ -22,14 +18,10 @@ if (ltrim($base, '/')) {
     $_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], strlen($base));
 }
 
-// instanciation d'un objet klein 
 $klein = new \Klein\Klein();
 
-// je cré une closure avec l'objet $fronController qui sera utilisé 
-// plus tard quand la fonction de callback sera executée. 
-// Elle sera executée quand on tapera dans l'URL  le chemin jusqu'a la racine .
-$klein->respond('GET', '/', function () use ($frontController) {
-    // $frontController->index();
+$klein->respond('GET', '/', function ($request, $response) {
+    $response->redirect('./listActors');
 });
 
 $klein->respond('GET', '/listActors', function () use ($frontController) {
@@ -37,15 +29,11 @@ $klein->respond('GET', '/listActors', function () use ($frontController) {
 });
 
 $klein->respond('GET', '/actor/[:id]', function ($request) use ($frontController) {
-    $actor = $frontController->getActor($request->id);
-    echo "<h2> Acteur </h2>";
-    require("src/views/viewActor.php");
+    $frontController->getActor($request->id);
 });
 
 $klein->respond('GET', '/actor/[:id]/films', function ($request) use ($frontController) {
-    $movies = $frontController->getMoviesforActor($request->id);
-    echo "<h2> Films de l'acteur </h2>";
-    require("src/views/viewActorMovies.php");
+    $frontController->getMoviesforActor($request->id);
 });
 
 $klein->respond('GET', '/addActor', function () {
@@ -54,19 +42,25 @@ $klein->respond('GET', '/addActor', function () {
 
 $klein->respond('POST', '/addActor', function ($request, $response) use ($backController) {
     $backController->addActor($request->paramsPost());
+<<<<<<< Updated upstream
     $response->redirect('http://localhost/mvcobjet/listActors');
+=======
+>>>>>>> Stashed changes
 });
 
 $klein->respond('POST', '/updateActor', function ($request, $response) use ($backController) {
     $backController->updateActor($request->paramsPost());
+<<<<<<< Updated upstream
     $response->redirect('http://localhost/mvcobjet/listActors');
+=======
+>>>>>>> Stashed changes
 });
 
 $klein->respond('GET', '/updateActor/[:id]', function ($request) use ($frontController) {
-    $actor = $frontController->getActor($request->id);
-    require("src/views/viewUpdateActor.php");
+    $frontController->getActor($request->id);
 });
 
+<<<<<<< Updated upstream
 $klein->respond('GET', '/actorMovies/[:id]', function ($request) use ($frontController) {
     $movies = $frontController->getMoviesforActor($request->id);
     require("src/views/viewActorMovies.php");
@@ -139,4 +133,6 @@ $klein->respond('GET', '/updateMovie/[:id]', function ($request) use ($frontCont
 //     return 'hello World';
 // });
 
+=======
+>>>>>>> Stashed changes
 $klein->dispatch();
