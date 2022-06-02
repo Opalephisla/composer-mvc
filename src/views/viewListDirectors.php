@@ -10,9 +10,10 @@
 
 <body>
     <?php
-    print_r($movies);
-    foreach ($movies as $movie) {
-        echo $movie->getTitle() . '<br>';
+    foreach ($res as $director) {
+        echo $director->getFirstName() . ' ' . $director->getLastName() . ' ';
+        echo '<a href="./updateDirector/' . $director->getId() . '">Update</a> ';
+        echo '<a href="./deleteDirector/' . $director->getId() . '">Delete</a><br>';
     }
     ?>
 </body>

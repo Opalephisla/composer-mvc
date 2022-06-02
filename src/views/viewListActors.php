@@ -11,7 +11,9 @@
 <body>
     <?php
     foreach ($res as $actor) {
-        echo $actor->getFirstName() . ' ' . $actor->getLastName() . '<br>';
+        echo '<a href="./actorMovies/' . $actor->getId() . '">' . $actor->getFirstName() . ' ' . $actor->getLastName() . '</a> ';
+        echo '<a href="./updateActor/' . $actor->getId() . '">Update</a> ';
+        echo '<a href="./deleteActor/' . $actor->getId() . '">Delete</a><br>';
     }
     ?>
 </body>

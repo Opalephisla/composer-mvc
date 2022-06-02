@@ -10,9 +10,10 @@
 
 <body>
     <?php
-    print_r($movies);
-    foreach ($movies as $movie) {
-        echo $movie->getTitle() . '<br>';
+    foreach ($res as $movie) {
+        echo '<a href="./movieMovies/' . $movie->getId() . '">' . $movie->getTitle() . '</a> ';
+        echo '<a href="./updateMovie/' . $movie->getId() . '">Update</a> ';
+        echo '<a href="./deleteMovie/' . $movie->getId() . '">Delete</a><br>';
     }
     ?>
 </body>

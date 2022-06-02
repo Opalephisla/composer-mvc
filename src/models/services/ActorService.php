@@ -33,8 +33,8 @@ class ActorService
     {
         $this->actorDao->updateActor($actor);
     }
-    public function findActorById($id)
+    public function deleteActor($actor)
     {
-        return $this->actorDao->findById($id);
+        $this->actorDao->deleteActor($actor);
     }
 }
