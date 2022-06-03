@@ -1,19 +1,25 @@
 <?php
 
-namespace mvcobjet\models\entities;
+namespace mvcobjet\Models\Entities;
 
 class Movie
 {
     private $id;
     private $title;
     private $description;
+    private $duration;
+    private $date;
+    private $coverImage;
+    private $genre;
+    private $director;
+    private $actors;
 
     public function getId(): int
     {
         return $this->id;
     }
 
-    public function setId(int $id)
+    public function setId($id): Movie
     {
         $this->id = $id;
         return $this;
@@ -24,9 +30,10 @@ class Movie
         return $this->title;
     }
 
-    public function setTitle(string $f)
+    public function setTitle(string $title): Movie
     {
-        $this->title =  $f;
+        $this->title = $title;
+        return $this;
     }
 
     public function getDescription(): string
@@ -34,48 +41,86 @@ class Movie
         return $this->description;
     }
 
-    public function setDescription(string $l)
+    public function setDescription(string $description): Movie
     {
-        $this->description =  $l;
+        $this->description = $description;
+        return $this;
     }
-    public function setDuration(string $d)
-    {
-        $this->duration =  $d;
-    }
+
     public function getDuration(): string
     {
         return $this->duration;
     }
-    public function setReleaseDate(string $d)
+
+    public function setDuration(string $duration): Movie
     {
-        $this->releaseDate =  $d;
+        $this->duration = $duration;
+        return $this;
     }
-    public function getReleaseDate(): string
+
+    public function getDate(): string
     {
-        return $this->releaseDate;
+        return $this->date;
     }
-    public function setCover(string $d)
+
+    public function setDate($date): Movie
     {
-        $this->cover =  $d;
+        $this->date = $date;
+        return $this;
     }
-    public function getCover(): string
+
+    public function getCoverImage(): string
     {
-        return $this->cover;
+        return $this->coverImage;
     }
-    public function setGenre(string $d)
+
+    public function setCoverImage(string $coverImage): Movie
     {
-        $this->genre =  $d;
+        $this->coverImage = $coverImage;
+        return $this;
     }
-    public function getGenre(): string
+
+    public function getGenre(): Genre
     {
         return $this->genre;
     }
-    public function setDirector(string $d)
+
+    public function setGenre(Genre $genre): Movie
     {
-        $this->director =  $d;
+        $this->genre = $genre;
+        return $this;
     }
-    public function getDirector(): string
+
+
+    public function getDirector(): Director
     {
         return $this->director;
+    }
+
+
+    public function setDirector(Director $director): Movie
+    {
+        $this->director = $director;
+        return $this;
+    }
+
+    public function getActors()
+    {
+        return $this->actors;
+    }
+
+    public function setActors($actors): Movie
+    {
+        $this->actors = $actors;
+        return $this;
+    }
+
+    public function addActor(Actor $actor): void
+    {
+        foreach ($this->actors as $actor) {
+            if (!in_array($actor, $this->actors)) {
+                $this->actors[] = $actor;
+            }
+        }
     }
 }

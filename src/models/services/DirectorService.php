@@ -27,7 +27,8 @@ class DirectorService
     }
     public function addDirector($director)
     {
-        $this->directorDao->createDirector($director);
+        $objDirector = $this->directorDao->creeObj($director);
+        $this->directorDao->createDirector($objDirector);
     }
     public function updateDirector($director)
     {

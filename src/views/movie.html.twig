@@ -1,0 +1,14 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Film
+{% endblock %}
+
+{% block content %}
+	{{ movie.title | upper}}<br>
+	<img src="{{ movie.coverImage }}" alt=""><br>
+	{{ movie.description | upper}}<br>
+	{{ movie.date | date('Y')}}
+	{{ movie.duration }}<br>
+	{{ dump(movie) }}
+	<br>
+{% endblock %}

@@ -23,13 +23,11 @@ class BackController
     }
     public function updateActor($request)
     {
-        $res = $this->actorService->updateActor($request);
-        return $res;
+        $this->actorService->updateActor($request);
     }
     public function deleteActor($request)
     {
-        $res = $this->actorService->deleteActor($request);
-        return $res;
+        $this->actorService->deleteActor($request);
     }
     public function findActorbyId($id)
     {
@@ -44,8 +42,7 @@ class BackController
     }
     public function updateDirector($request)
     {
-        $res = $this->directorService->updateDirector($request);
-        return $res;
+        $this->directorService->updateDirector($request);
     }
     public function findDirectorbyId($id)
     {
@@ -54,7 +51,14 @@ class BackController
     }
     public function deleteDirector($request)
     {
-        $res = $this->directorService->deleteDirector($request);
-        return $res;
+        $this->directorService->deleteDirector($request);
+    }
+    public function addMovie($request)
+    {
+        $this->movieService->addMovie($request);
+    }
+    public function updateMovie($request)
+    {
+        $this->movieService->updateMovie($request);
     }
 }

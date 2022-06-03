@@ -56,6 +56,21 @@ class ActorDao extends ConnectDao
             return $movies;
         }
     }
+
+    public function findByMovie($id)
+    {
+        $sql = "SELECT * FROM actor WHERE id IN (SELECT actor_id FROM movies_actors WHERE movie_id = :id)";
+        $stmt = $this->db->prepare($sql);
+        $result = $stmt->execute(['id' => $id]);
+        if ($result) {
+            $actors = [];
+            while ($row =  $stmt->fetch(\PDO::FETCH_ASSOC)) {
+                array_push($actors, $this->creeObj($row));
+            }
+            return $actors;
+        }
+    }
+
     public function createActor($actor)
     {
         $sql = "INSERT INTO actor (first_name, last_name) VALUES (:first_name, :last_name)";

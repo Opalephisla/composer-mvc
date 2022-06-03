@@ -84,4 +84,14 @@ class DirectorDao extends ConnectDao
             return $this->db->lastInsertId();
         }
     }
+    public function findByMovie($id)
+    {
+        $sql = "SELECT * FROM director WHERE id IN (SELECT director_id FROM movies_directors WHERE movie_id = :id)";
+        $stmt = $this->db->prepare($sql);
+        $result = $stmt->execute(['id' => $id]);
+        if ($result) {
+            $row =  $stmt->fetch(\PDO::FETCH_ASSOC);
+            return $this->creeObj($row);
+        }
+    }
 }

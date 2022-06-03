@@ -21,15 +21,14 @@ class FrontController
     }
 
     public function listActors()
-    { // recup des acteurs (liste d'objet)
+    {
         $result = $this->actorService->getAllActors();
-        // compilation twig + acteur = html
         echo $this->twig->render('actors.html.twig', ['actors' => $result]);
     }
     public function getActor($id)
     {
         $res = $this->actorService->getOneActor($id);
-        return $res;
+        echo $this->twig->render('actor.html.twig', ['actor' => $res]);
     }
     public function getMoviesforActor($id)
     {
@@ -39,34 +38,48 @@ class FrontController
     public function listDirectors()
     {
         $res = $this->directorService->getAllDirectors();
-        return $res;
+        echo $this->twig->render('directors.html.twig', ['directors' => $res]);
     }
     public function getDirector($id)
     {
         $res = $this->directorService->getOneDirector($id);
-        return $res;
+        echo $this->twig->render('director.html.twig', ['director' => $res]);
     }
     public function getMoviesforDirector($id)
     {
         $res = $this->directorService->getDirectorMovies($id);
         return $res;
     }
-    // list movies
     public function listMovies()
     {
         $res = $this->movieService->getAllMovies();
-        return $res;
+        echo $this->twig->render('movies.html.twig', ['movies' => $res]);
     }
-    // get one movie
     public function getMovie($id)
     {
-        $res = $this->movieService->getOneMovie($id);
-        return $res;
+        $res = $this->movieService->getById($id);
+        echo $this->twig->render('movie.html.twig', ['movie' => $res]);
     }
-    // get movie genre
     public function getMovieGenre($id)
     {
         $res = $this->movieService->getMovieGenre($id);
         return $res;
+    }
+    public function addActor()
+    {
+        echo $this->twig->render('newactor.html.twig');
+    }
+    public function updateActor($id)
+    {
+        $res = $this->actorService->updateActor($id);
+        echo $this->twig->render('updateactor.html.twig', ['actor' => $res]);
+    }
+    public function addDirector()
+    {
+        echo $this->twig->render('newdirector.html.twig');
+    }
+    public function addMovie()
+    {
+        echo $this->twig->render('newmovie.html.twig');
     }
 }

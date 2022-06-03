@@ -2,8 +2,12 @@
 {% endblock %}
 
 {% block body %}
+	<br>
 	{% for actor in actors %}
-		{{ actor.firstname }}
-		{{ actor.lastname }}
+		<a href="./actor/{{ actor.id }}">{{ actor.firstname }}
+			{{ actor.lastname }}</a>
+		<a href="./updateActor/{{ actor.id }}">Update</a>
+		<a href="./deleteActor/{{ actor.id }}">Delete</a><br>
 	{% endfor %}
+	<a href="./addActor">Add a new actor</a>
 {% endblock %}

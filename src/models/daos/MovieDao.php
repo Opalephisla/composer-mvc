@@ -15,10 +15,10 @@ class MovieDao extends ConnectDao
         $movie->setTitle($fields['title']);
         $movie->setDescription($fields['description']);
         $movie->setDuration($fields['duration']);
-        $movie->setReleaseDate($fields['date']);
-        $movie->setCover($fields['cover_image']);
-        $movie->setGenre($fields['genre_id']);
-        $movie->setDirector($fields['director_id']);
+        $movie->setDate($fields['date']);
+        $movie->setCoverImage($fields['cover_image']);
+        // $movie->setGenre($fields['genre_id']);
+        // $movie->setDirector($fields['director_id']);
         return $movie;
     }
 
@@ -84,6 +84,15 @@ class MovieDao extends ConnectDao
         if ($result) {
             $row =  $stmt->fetch(\PDO::FETCH_ASSOC);
             return $this->creeObj($row);
+        }
+    }
+    public function addActor($id, $actor)
+    {
+        $sql = "INSERT INTO movie_actor (movie_id, actor_id) VALUES (:movie_id, :actor_id)";
+        $stmt = $this->db->prepare($sql);
+        $result = $stmt->execute(['movie_id' => $id, 'actor_id' => $actor]);
+        if ($result) {
+            return $this->db->lastInsertId();
         }
     }
 }

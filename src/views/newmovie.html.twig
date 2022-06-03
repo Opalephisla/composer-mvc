@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Add movie
+{% endblock %}
+
+{% block content %}
+
+	<h1>Add a new movie</h1>
+	<form action="addMovie" method="post">
+		<label for="title">Title</label>
+		<input type="text" name="title" id="title">
+		<br>
+		<label for="description">Description</label>
+		<textarea name="description" id="description" placeholder="Description of the movie"></textarea>
+		<br>
+		<label for="duration">Duration</label>
+		<input type="text" name="duration" id="duration" min="1" max="5">
+		<br>
+		<label for="releaseDate">Release Date</label>
+		<input type="date" name="releaseDate" id="releaseDate">
+		<br>
+		<label for="cover_image">Cover image</label>
+		<input type="text" name="cover_image" id="cover_image">
+		<br>
+		<label for="director">Director</label>
+		<input type="text" name="director" id="director">
+		<br>
+		<label for="genre">Genre</label>
+		<input type="text" name="genre" id="genre">
+		<br>
+		<input type="submit" value="Add movie">
+	</form>
+	<br>
+{% endblock %}

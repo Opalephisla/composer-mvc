@@ -1,0 +1,13 @@
+{% block title %}Directeurs
+{% endblock %}
+
+{% block body %}
+	<br>
+	{% for director in directors %}
+		<a href="./director/{{ director.id }}">{{ director.firstname }}
+			{{ director.lastname }}</a>
+		<a href="./updateDirector/{{ director.id }}">Update</a>
+		<a href="./deleteDirector/{{ director.id }}">Delete</a><br>
+	{% endfor %}
+	<a href="./addDirector">Ajouter un directeur</a>
+{% endblock %}
